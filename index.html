@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS Admin - Product Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --surface: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --danger: #ef4444;
+            --danger-bg: #fef2f2;
+            --success: #10b981;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --transition: all 0.2s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 40px 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .management-grid {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+        }
+
+        .card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-outline {
+            background-color: white;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+        }
+
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: #f1f5f9;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-icon.edit {
+            color: var(--primary);
+        }
+
+        .btn-icon.delete {
+            color: var(--danger);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            background-color: #f8fafc;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input:focus {
+            background-color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .input-with-symbol {
+            position: relative;
+        }
+
+        .input-with-symbol span {
+            position: absolute;
+            left: 14px;
+            top: 12px;
+            color: var(--text-muted);
+        }
+
+        .input-with-symbol input {
+            padding-left: 32px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid var(--border);
+        }
+
+        td {
+            padding: 16px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .product-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .product-img-wrapper {
+            width: 44px;
+            height: 44px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 4px;
+        }
+
+        .product-img-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .product-info strong {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .product-info span {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .badge {
+            background: #f1f5f9;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        div:where(.swal2-container) button:where(.swal2-styled) {
+            border-radius: 8px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <div>
+            <h2>Product Management</h2>
+            <p>Create and organize your inventory items.</p>
+        </div>
+        <a href="pos.html" class="btn btn-outline" target="_blank">Launch POS Screen <i
+                class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="management-grid">
+        <div class="card">
+            <h3 id="form-title">Create Product</h3>
+            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">Fill in the details below.</p>
+
+            <form id="product-form">
+                <input type="hidden" id="txtId">
+
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" id="txtName" required>
+                </div>
+                <div class="form-group">
+                    <label>Category (e.g. Food, Drink)</label>
+                    <input type="text" id="txtCategory" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Cost</label>
+                        <div class="input-with-symbol">
+                            <span>$</span>
+                            <input type="number" id="txtCost" step="0.01" min="0" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Sale Price</label>
+                        <div class="input-with-symbol">
+                            <span>$</span>
+                            <input type="number" id="txtPrice" step="0.01" min="0" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Image URL</label>
+                    <input type="url" id="txtImage" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="resetForm()">Clear</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save">Save Product</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3>Product Inventory</h3>
+                <span class="badge" id="product-count">0 Items</span>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product Details</th>
+                        <th>ID</th>
+                        <th>Cost</th>
+                        <th>Price</th>
+                        <th style="text-align: right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="product-table-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let products = [];
+
+        let storedData = localStorage.getItem('pos_products');
+        if (storedData != null) {
+            products = JSON.parse(storedData);
+        }
+
+        let productForm = document.getElementById('product-form');
+
+        productForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            let id = document.getElementById('txtId').value;
+            let name = document.getElementById('txtName').value;
+            let category = document.getElementById('txtCategory').value;
+            let cost = parseFloat(document.getElementById('txtCost').value);
+            let price = parseFloat(document.getElementById('txtPrice').value);
+            let image = document.getElementById('txtImage').value;
+
+            if (id != "") {
+                for (let i = 0; i < products.length; i++) {
+                    if (products[i].id == id) {
+                        products[i].name = name;
+                        products[i].category = category;
+                        products[i].cost = cost;
+                        products[i].price = price;
+                        products[i].image = image;
+                    }
+                }
+            }
+            else {
+                let randomNum = Math.floor(Math.random() * 900) + 100;
+                let newPro = {
+                    id: "#" + randomNum,
+                    name: name,
+                    category: category,
+                    cost: cost,
+                    price: price,
+                    image: image
+                };
+                products.push(newPro);
+            }
+
+            saveData();
+            showData();
+            resetForm();
+        });
+
+        function showData() {
+            let tbody = document.getElementById('product-table-body');
+            tbody.innerHTML = '';
+
+            document.getElementById('product-count').innerText = products.length + ' Items';
+
+            for (let i = 0; i < products.length; i++) {
+                let p = products[i];
+
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>
+                        <div class="product-cell">
+                            <div class="product-img-wrapper">
+                                <img src="${p.image}">
+                            </div>
+                            <div class="product-info">
+                                <strong>${p.name}</strong>
+                                <span>${p.category}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${p.id}</td>
+                    <td>$${p.cost.toFixed(2)}</td>
+                    <td><strong>$${p.price.toFixed(2)}</strong></td>
+                    <td style="text-align: right;">
+                        <button class="btn-icon edit" onclick="editProduct('${p.id}')"><i class="fas fa-pen"></i></button>
+                        <button class="btn-icon delete" onclick="deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            }
+        }
+
+        function editProduct(id) {
+            for (let i = 0; i < products.length; i++) {
+                if (products[i].id == id) {
+                    document.getElementById('txtId').value = products[i].id;
+                    document.getElementById('txtName').value = products[i].name;
+                    document.getElementById('txtCategory').value = products[i].category;
+                    document.getElementById('txtCost').value = products[i].cost;
+                    document.getElementById('txtPrice').value = products[i].price;
+                    document.getElementById('txtImage').value = products[i].image;
+
+                    document.getElementById('form-title').innerText = "Update Product";
+                    document.getElementById('btn-save').innerText = "Update Changes";
+                }
+            }
+        }
+
+        function deleteProduct(id) {
+            Swal.fire({
+                title: 'Delete Product?',
+                text: "Are you sure you want to delete this product?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#94a3b8',
+                confirmButtonText: 'Yes, delete it'
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    for (let i = 0; i < products.length; i++) {
+                        if (products[i].id == id) {
+                            products.splice(i, 1);
+                            break;
+                        }
+                    }
+                    saveData();
+                    showData();
+
+                    Swal.fire(
+                        'Deleted!',
+                        'Product has been removed.',
+                        'success'
+                    );
+                }
+            });
+        }
+
+        function saveData() {
+            let convertToString = JSON.stringify(products);
+            localStorage.setItem('pos_products', convertToString);
+        }
+
+        function resetForm() {
+            productForm.reset();
+            document.getElementById('txtId').value = '';
+            document.getElementById('form-title').innerText = "Create Product";
+            document.getElementById('btn-save').innerText = "Save Product";
+        }
+
+        showData();
+    </script>
+</body>
+
+</html>

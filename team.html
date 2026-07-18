@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Members</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --surface: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header-section h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .header-section p {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        /* --- Teacher Section --- */
+        .teacher-card {
+            background-color: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 30px 40px;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            border: 2px solid var(--primary);
+            /* Highlighted border for teacher */
+            margin-bottom: 40px;
+            max-width: 350px;
+            width: 100%;
+        }
+
+        .teacher-role {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        /* --- Team Grid --- */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .team-card {
+            background-color: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 40px 24px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: #c7d2fe;
+        }
+
+        /* --- Image Avatar Styles --- */
+        .avatar {
+            width: 100px;
+            height: 100px;
+            background-color: #e0e7ff;
+            border-radius: 50%;
+            margin: 0 auto 20px auto;
+            overflow: hidden;
+            /* This makes the square image into a circle */
+            border: 3px solid #e0e7ff;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .teacher-card .avatar {
+            width: 120px;
+            /* Make teacher image slightly larger */
+            height: 120px;
+            border-color: #c7d2fe;
+        }
+
+        /* This ensures the image fills the circle perfectly without stretching */
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .member-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .member-role {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* --- Buttons --- */
+        .nav-actions {
+            margin-top: 50px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: white;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-outline:hover {
+            background-color: #f8fafc;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header-section">
+        <h1>SW35 Final Project: Modern POS</h1>
+        <p>Year 2, Semester 1</p>
+    </div>
+
+    <div class="teacher-card">
+        <div class="teacher-role">Lecturer</div>
+        <div class="avatar">
+            <!-- Replace 'teacher.jpg' with your teacher's actual image file -->
+            <img src="img/teacher.jpeg" alt="Lecturer" onerror="this.src='https://via.placeholder.com/150'">
+        </div>
+        <div class="member-name">ជឿន ពិនឆៃ</div>
+    </div>
+
+    <div class="team-grid">
+
+        <div class="team-card">
+            <div class="avatar">
+                <!-- Replace 'raktivid.jpg' with the actual image file -->
+                <img src="img/vath.jpeg" alt="Nouk Savath" onerror="this.src='https://via.placeholder.com/150'">
+            </div>
+            <div class="member-name">Nouk Savath</div>
+            <div class="member-role">Group Member</div>
+        </div>
+
+        <div class="team-card">
+            <div class="avatar">
+                <!-- Replace 'savath.jpg' with the actual image file -->
+                <img src="img/tivid.jpeg" alt="Srun Raktivid" onerror="this.src='https://via.placeholder.com/150'">
+            </div>
+            <div class="member-name">Srun Raktivid</div>
+            <div class="member-role">Group Member</div>
+        </div>
+
+        <div class="team-card">
+            <div class="avatar">
+                <!-- Replace 'bunheang.jpg' with the actual image file -->
+                <img src="img/heang.jpeg" alt="Krin Bunheang" onerror="this.src='https://via.placeholder.com/150'">
+            </div>
+            <div class="member-name">Krin Bunheang</div>
+            <div class="member-role">Group Member</div>
+        </div>
+
+    </div>
+
+    <div class="nav-actions">
+        <a href="index.html" class="btn btn-outline"><i class="fas fa-cog"></i> Go to Admin Panel</a>
+        <a href="pos.html" class="btn btn-primary"><i class="fas fa-store"></i> Open POS Screen</a>
+    </div>
+
+</body>
+
+</html>
