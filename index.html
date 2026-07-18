@@ -249,6 +249,14 @@
             font-weight: 600;
         }
 
+        .product-info span {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            text-transform: capitalize;
+        }
+
         .badge {
             background: #f1f5f9;
             padding: 4px 10px;
@@ -304,6 +312,10 @@
                 <div class="form-group">
                     <label>Product Name</label>
                     <input type="text" id="txtName" required>
+                </div>
+                <div class="form-group">
+                    <label>Category (e.g. Coffee, Drink, Food)</label>
+                    <input type="text" id="txtCategory" required>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
@@ -371,6 +383,7 @@
 
             let id = document.getElementById('txtId').value;
             let name = document.getElementById('txtName').value;
+            let category = document.getElementById('txtCategory').value;
             let cost = parseFloat(document.getElementById('txtCost').value);
             let price = parseFloat(document.getElementById('txtPrice').value);
             let image = document.getElementById('txtImage').value;
@@ -379,6 +392,7 @@
                 for (let i = 0; i < products.length; i++) {
                     if (products[i].id == id) {
                         products[i].name = name;
+                        products[i].category = category;
                         products[i].cost = cost;
                         products[i].price = price;
                         products[i].image = image;
@@ -390,6 +404,7 @@
                 let newPro = {
                     id: "#" + randomNum,
                     name: name,
+                    category: category,
                     cost: cost,
                     price: price,
                     image: image
@@ -415,7 +430,7 @@
                 let htmlString = '';
                 htmlString += '<td><div class="product-cell"><div class="product-img-wrapper">';
                 htmlString += '<img src="' + p.image + '" onerror="this.src=\'https://via.placeholder.com/40\'"></div>';
-                htmlString += '<div class="product-info"><strong>' + p.name + '</strong></div></div></td>';
+                htmlString += '<div class="product-info"><strong>' + p.name + '</strong><span>' + p.category + '</span></div></div></td>';
                 htmlString += '<td>' + p.id + '</td>';
                 htmlString += '<td>$' + p.cost.toFixed(2) + '</td>';
                 htmlString += '<td><strong>$' + p.price.toFixed(2) + '</strong></td>';
@@ -433,6 +448,7 @@
                 if (products[i].id == id) {
                     document.getElementById('txtId').value = products[i].id;
                     document.getElementById('txtName').value = products[i].name;
+                    document.getElementById('txtCategory').value = products[i].category;
                     document.getElementById('txtCost').value = products[i].cost;
                     document.getElementById('txtPrice').value = products[i].price;
                     document.getElementById('txtImage').value = products[i].image;

@@ -101,6 +101,38 @@
             flex-direction: column;
         }
 
+        .category-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .cat-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-muted);
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+
+        .cat-btn:hover {
+            background: #f8fafc;
+            color: var(--text-main);
+        }
+
+        .cat-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -143,6 +175,14 @@
             max-height: 100%;
             object-fit: contain;
             mix-blend-mode: multiply;
+        }
+
+        .pos-product-card .cat {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            margin-bottom: 4px;
         }
 
         .pos-product-card .name {
@@ -499,6 +539,9 @@
 
     <div class="pos-container">
         <div class="pos-products-section">
+            <div class="category-filters" id="category-area">
+            </div>
+
             <div class="products-grid" id="product-area">
             </div>
         </div>
@@ -559,6 +602,7 @@
         let products = [];
         let cart = [];
         let globalTotal = 0;
+        let currentCategory = "All";
 
         let getData = localStorage.getItem('pos_products');
         if (getData != null) {
@@ -573,6 +617,59 @@
             document.getElementById('txtClock').innerText = h + ":" + m;
         }, 1000);
 
+        function loadCategories() {
+            let catArea = document.getElementById('category-area');
+            catArea.innerHTML = '';
+
+            let arrCat = [];
+            for (let i = 0; i < products.length; i++) {
+                let c = products[i].category;
+
+                let isDuplicate = false;
+                for (let j = 0; j < arrCat.length; j++) {
+                    if (arrCat[j] == c) {
+                        isDuplicate = true;
+                        break;
+                    }
+                }
+
+                if (isDuplicate == false && c != "") {
+                    arrCat.push(c);
+                }
+            }
+
+            let btnAll = document.createElement('button');
+            if (currentCategory == "All") {
+                btnAll.className = 'cat-btn active';
+            } else {
+                btnAll.className = 'cat-btn';
+            }
+            btnAll.innerText = 'All Items';
+            btnAll.onclick = function () { changeCat("All"); };
+            catArea.appendChild(btnAll);
+
+            for (let i = 0; i < arrCat.length; i++) {
+                let nameCat = arrCat[i];
+                let btn = document.createElement('button');
+
+                if (currentCategory == nameCat) {
+                    btn.className = 'cat-btn active';
+                } else {
+                    btn.className = 'cat-btn';
+                }
+
+                btn.innerText = nameCat;
+                btn.onclick = function () { changeCat(nameCat); };
+                catArea.appendChild(btn);
+            }
+        }
+
+        function changeCat(catName) {
+            currentCategory = catName;
+            loadCategories();
+            loadProducts();
+        }
+
         function loadProducts() {
             let grid = document.getElementById('product-area');
             grid.innerHTML = '';
@@ -585,18 +682,21 @@
             for (let i = 0; i < products.length; i++) {
                 let p = products[i];
 
-                let card = document.createElement('div');
-                card.className = 'pos-product-card';
-                card.onclick = function () {
-                    addCart(p.id);
-                };
+                if (currentCategory == "All" || p.category == currentCategory) {
+                    let card = document.createElement('div');
+                    card.className = 'pos-product-card';
+                    card.onclick = function () {
+                        addCart(p.id);
+                    };
 
-                let cardHtml = '<div class="card-img-box"><img src="' + p.image + '" onerror="this.src=\'https://via.placeholder.com/100\'"></div>';
-                cardHtml += '<div class="name">' + p.name + '</div>';
-                cardHtml += '<div class="price">$' + p.price.toFixed(2) + '</div>';
+                    let cardHtml = '<div class="card-img-box"><img src="' + p.image + '" onerror="this.src=\'https://via.placeholder.com/100\'"></div>';
+                    cardHtml += '<div class="cat">' + p.category + '</div>';
+                    cardHtml += '<div class="name">' + p.name + '</div>';
+                    cardHtml += '<div class="price">$' + p.price.toFixed(2) + '</div>';
 
-                card.innerHTML = cardHtml;
-                grid.appendChild(card);
+                    card.innerHTML = cardHtml;
+                    grid.appendChild(card);
+                }
             }
         }
 
@@ -871,6 +971,7 @@
             printPage(fullHtml);
         }
 
+        loadCategories();
         loadProducts();
         showCart();       
     </script>
