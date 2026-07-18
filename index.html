@@ -242,12 +242,6 @@
             font-weight: 600;
         }
 
-        .product-info span {
-            display: block;
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
         .badge {
             background: #f1f5f9;
             padding: 4px 10px;
@@ -270,8 +264,10 @@
             <h2>Product Management</h2>
             <p>Create and organize your inventory items.</p>
         </div>
-        <a href="pos.html" class="btn btn-outline" target="_blank">Launch POS Screen <i
-                class="fas fa-arrow-right"></i></a>
+        <div style="display: flex; gap: 12px;">
+            <a href="team.html" class="btn btn-outline"><i class="fas fa-users"></i> View Team</a>
+            <a href="pos.html" class="btn btn-primary">POS Screen <i class="fas fa-arrow-right"></i></a>
+        </div>
     </div>
 
     <div class="management-grid">
@@ -285,10 +281,6 @@
                 <div class="form-group">
                     <label>Product Name</label>
                     <input type="text" id="txtName" required>
-                </div>
-                <div class="form-group">
-                    <label>Category (e.g. Food, Drink)</label>
-                    <input type="text" id="txtCategory" required>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
@@ -353,7 +345,6 @@
 
             let id = document.getElementById('txtId').value;
             let name = document.getElementById('txtName').value;
-            let category = document.getElementById('txtCategory').value;
             let cost = parseFloat(document.getElementById('txtCost').value);
             let price = parseFloat(document.getElementById('txtPrice').value);
             let image = document.getElementById('txtImage').value;
@@ -362,7 +353,6 @@
                 for (let i = 0; i < products.length; i++) {
                     if (products[i].id == id) {
                         products[i].name = name;
-                        products[i].category = category;
                         products[i].cost = cost;
                         products[i].price = price;
                         products[i].image = image;
@@ -374,7 +364,6 @@
                 let newPro = {
                     id: "#" + randomNum,
                     name: name,
-                    category: category,
                     cost: cost,
                     price: price,
                     image: image
@@ -405,7 +394,6 @@
                             </div>
                             <div class="product-info">
                                 <strong>${p.name}</strong>
-                                <span>${p.category}</span>
                             </div>
                         </div>
                     </td>
@@ -426,7 +414,6 @@
                 if (products[i].id == id) {
                     document.getElementById('txtId').value = products[i].id;
                     document.getElementById('txtName').value = products[i].name;
-                    document.getElementById('txtCategory').value = products[i].category;
                     document.getElementById('txtCost').value = products[i].cost;
                     document.getElementById('txtPrice').value = products[i].price;
                     document.getElementById('txtImage').value = products[i].image;

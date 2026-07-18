@@ -58,7 +58,6 @@
             font-size: 16px;
         }
 
-        /* --- Teacher Section --- */
         .teacher-card {
             background-color: var(--surface);
             border-radius: var(--radius-lg);
@@ -66,7 +65,6 @@
             text-align: center;
             box-shadow: var(--shadow-md);
             border: 2px solid var(--primary);
-            /* Highlighted border for teacher */
             margin-bottom: 40px;
             max-width: 350px;
             width: 100%;
@@ -81,7 +79,6 @@
             margin-bottom: 15px;
         }
 
-        /* --- Team Grid --- */
         .team-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -106,7 +103,6 @@
             border-color: #c7d2fe;
         }
 
-        /* --- Image Avatar Styles --- */
         .avatar {
             width: 100px;
             height: 100px;
@@ -114,19 +110,16 @@
             border-radius: 50%;
             margin: 0 auto 20px auto;
             overflow: hidden;
-            /* This makes the square image into a circle */
             border: 3px solid #e0e7ff;
             box-shadow: var(--shadow-sm);
         }
 
         .teacher-card .avatar {
             width: 120px;
-            /* Make teacher image slightly larger */
             height: 120px;
             border-color: #c7d2fe;
         }
 
-        /* This ensures the image fills the circle perfectly without stretching */
         .avatar img {
             width: 100%;
             height: 100%;
@@ -145,7 +138,6 @@
             color: var(--text-muted);
         }
 
-        /* --- Buttons --- */
         .nav-actions {
             margin-top: 50px;
             display: flex;
@@ -203,17 +195,14 @@
     <div class="teacher-card">
         <div class="teacher-role">Lecturer</div>
         <div class="avatar">
-            <!-- Replace 'teacher.jpg' with your teacher's actual image file -->
             <img src="img/teacher.jpeg" alt="Lecturer" onerror="this.src='https://via.placeholder.com/150'">
         </div>
         <div class="member-name">ជឿន ពិនឆៃ</div>
     </div>
 
     <div class="team-grid">
-
         <div class="team-card">
             <div class="avatar">
-                <!-- Replace 'raktivid.jpg' with the actual image file -->
                 <img src="img/vath.jpeg" alt="Nouk Savath" onerror="this.src='https://via.placeholder.com/150'">
             </div>
             <div class="member-name">Nouk Savath</div>
@@ -222,7 +211,6 @@
 
         <div class="team-card">
             <div class="avatar">
-                <!-- Replace 'savath.jpg' with the actual image file -->
                 <img src="img/tivid.jpeg" alt="Srun Raktivid" onerror="this.src='https://via.placeholder.com/150'">
             </div>
             <div class="member-name">Srun Raktivid</div>
@@ -231,13 +219,11 @@
 
         <div class="team-card">
             <div class="avatar">
-                <!-- Replace 'bunheang.jpg' with the actual image file -->
                 <img src="img/heang.jpeg" alt="Krin Bunheang" onerror="this.src='https://via.placeholder.com/150'">
             </div>
             <div class="member-name">Krin Bunheang</div>
             <div class="member-role">Group Member</div>
         </div>
-
     </div>
 
     <div class="nav-actions">

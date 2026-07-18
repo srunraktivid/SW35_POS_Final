@@ -72,7 +72,7 @@
             overflow: hidden;
         }
 
-        .btn-history {
+        .nav-btn {
             background: white;
             border: 1px solid var(--border);
             padding: 8px 16px;
@@ -83,10 +83,14 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            text-decoration: none;
+            font-size: 14px;
         }
 
-        .btn-history:hover {
+        .nav-btn:hover {
             background: #f8fafc;
+            border-color: var(--primary);
+            color: var(--primary);
         }
 
         .pos-products-section {
@@ -457,11 +461,14 @@
 
     <div class="pos-header">
         <h2><i class="fas fa-store"></i> Point of Sale</h2>
-        <div style="display: flex; align-items: center; gap: 20px;">
-            <div style="font-size: 14px; color: var(--text-muted); font-weight: 500;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="font-size: 14px; color: var(--text-muted); font-weight: 500; margin-right: 10px;">
                 <span id="txtClock"></span>
             </div>
-            <button class="btn-history" onclick="openHistory()"><i class="fas fa-list-alt"></i> View History</button>
+
+            <a href="index.html" class="nav-btn"><i class="fas fa-cog"></i> Admin</a>
+            <a href="team.html" class="nav-btn"><i class="fas fa-users"></i> Team</a>
+            <button class="nav-btn" onclick="openHistory()"><i class="fas fa-list-alt"></i> History</button>
         </div>
     </div>
 
@@ -508,11 +515,16 @@
         </div>
     </div>
 
+    <!-- History Popup -->
     <div id="modalHistory" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Paid Orders History</h2>
-                <span class="close-btn" onclick="closeHistory()">&times;</span>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <!-- Print History Button -->
+                    <button class="nav-btn" onclick="printHistory()"><i class="fas fa-print"></i> Print</button>
+                    <span class="close-btn" onclick="closeHistory()">&times;</span>
+                </div>
             </div>
             <div id="history-data">
             </div>
@@ -826,6 +838,20 @@
             if (event.target == m) {
                 m.style.display = 'none';
             }
+        }
+
+        // Print entire history table
+        function printHistory() {
+            let dataDiv = document.getElementById('history-data').innerHTML;
+            if (dataDiv == "" || dataDiv.includes("No history")) {
+                Swal.fire('No Data', 'There is no history to print.', 'warning');
+                return;
+            }
+
+            let style = '<style>table { width: 100%; border-collapse: collapse; font-family: Arial;} th, td { border: 1px solid black; padding: 8px; text-align: left;} th { background-color: #eee;}</style>';
+            let fullHtml = '<h2>Sales History Report</h2>' + style + dataDiv;
+
+            printPage(fullHtml);
         }
 
         loadProducts();
